@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    p Welcome to #{title}
+
+    button(id="counterButton") +1
+    p(id="counter") 0
+
+    script.
+        document.getElementById('counterButton').addEventListener('click', function() {
+            let counter = document.getElementById('counter');
+            let count = parseInt(counter.textContent) + 1;
+            counter.textContent = count;
+        });
