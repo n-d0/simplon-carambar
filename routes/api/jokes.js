@@ -29,4 +29,15 @@ router.post('/add', async function(req, res, next) {
     }
 });
 
+/* GET joke by ID */
+router.get('/:id', async function(req, res, next) {
+    try {
+        const jokeId = req.params.id;
+        const joke = await Joke.findByPk(jokeId);
+        res.json(joke);
+    } catch (error) {
+        res.status(500).json({ error: `Error: ${error}` });
+    }
+});
+
 module.exports = router;
