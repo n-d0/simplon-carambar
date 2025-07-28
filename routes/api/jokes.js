@@ -5,20 +5,12 @@ const Joke = require('../../models/Joke');
 
 /* GET jokes listing. */
 router.get('/', async function(req, res, next) {
-    let message='';
     try {
-        /* await Joke.sync();
-        await Joke.create({
-            question: 'Quelle est la femelle du hamster ?',
-            answer: 'L’Amsterdam'
-        }); */
-
         const jokes = await Joke.findAll();
-        message += ` Jokes: ${JSON.stringify(jokes)}`;
+        res.json({ jokes: jokes });
     } catch (error) {
-        message = `Unable to connect to the database: ${error}`;
+        res.status(500).json({ error: `Error: ${error}` });
     }
-    res.render('jokes', { message: message });
 });
 
 /* POST endpoint to add a new joke */
