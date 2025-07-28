@@ -1,13 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
-const { Sequelize } = require('sequelize');
-
-// Option 2: Passing parameters separately (sqlite)
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: 'jokes.sqlite'
-});
+const sequelize = require('../config/sequelize');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
