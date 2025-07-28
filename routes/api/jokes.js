@@ -29,6 +29,18 @@ router.post('/add', async function(req, res, next) {
     }
 });
 
+/* GET a random joke */
+router.get('/random', async function(req, res, next) {
+    try {
+        const jokes = await Joke.findAll();
+        const randomIndex = Math.floor(Math.random() * jokes.length);
+        const randomJoke = jokes[randomIndex];
+        res.json(randomJoke);
+    } catch (error) {
+        res.status(500).json({ error: `Error: ${error}` });
+    }
+});
+
 /* GET joke by ID */
 router.get('/:id', async function(req, res, next) {
     try {
