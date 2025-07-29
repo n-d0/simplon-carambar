@@ -6,11 +6,19 @@ var logger = require('morgan');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var jokesRouter = require('./routes/api/jokes');
 
 var app = express();
+
+//CORS middleware
+const corsOptions = {
+    origin: 'https://n-d0.github.io',
+};
+app.use(cors(corsOptions));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,20 +32,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Swagger setup
 const swaggerOptions = {
-  swaggerDefinition: {
-    myapi: '3.0.0',
-    info: {
-      title: 'Carambar API',
-      version: '1.0.0',
-      description: 'API documentation',
+    swaggerDefinition: {
+        myapi: '3.0.0',
+            info: {
+                title: 'Carambar API',
+                version: '1.0.0',
+                description: 'API documentation',
+            },
+        servers: [
+            {
+                url: process.env.API_BASE_URL,
+            },
+        ],
     },
-    servers: [
-      {
-        url: process.env.API_BASE_URL,
-      },
-    ],
-  },
-  apis: ['./routes/api/*.js'], // files containing annotations as above
+    apis: ['./routes/api/*.js'], // files containing annotations as above
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
