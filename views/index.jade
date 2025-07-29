@@ -1,15 +1,22 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
-
-    button(id="counterButton") +1
-    p(id="counter") 0
+    h1 Voici une bonne blague
+    div(id="jokeContainer")
+        p= joke.question
+        p= joke.answer
+    button(id="refreshJokeButton") Une nouvelle blague !
 
     script.
-        document.getElementById('counterButton').addEventListener('click', function() {
-            let counter = document.getElementById('counter');
-            let count = parseInt(counter.textContent) + 1;
-            counter.textContent = count;
+        document.getElementById('refreshJokeButton').addEventListener('click', async function() {
+        try {
+            const response = await fetch('/api/jokes/random');
+            const joke = await response.json();
+            document.getElementById('jokeContainer').innerHTML = `
+                <p>${joke.question}</p>
+                <p>${joke.answer}</p>
+            `;
+        } catch (error) {
+            document.getElementById('jokeContainer').innerHTML = error;
+        }
         });
