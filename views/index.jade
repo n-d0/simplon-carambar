@@ -1,11 +1,13 @@
 extends layout
 
 block content
-    h1 Voici une bonne blague
-    div(id="jokeContainer")
-        p= joke.question
-        p= joke.answer
-    button(id="refreshJokeButton") Une nouvelle blague !
+    div(class="main-container")
+        img(src="images/logo.png", alt="carambar logo", width="500px")
+        h1 Voici une bonne blague
+        div(id="jokeContainer")
+            p= joke.question
+            p= joke.answer
+        button(id="refreshJokeButton") Une nouvelle blague !
 
     script.
         document.getElementById('refreshJokeButton').addEventListener('click', async function() {
